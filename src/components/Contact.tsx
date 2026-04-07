@@ -1,25 +1,24 @@
 import { useEffect, useRef } from 'react';
 
-export default function Contact() {
+export function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const content = contentRef.current;
-            if (content) {
-              content.style.transition = 'opacity 1s ease, transform 1s ease';
-              content.style.opacity = '1';
-              content.style.transform = 'translateY(0)';
-            }
-            observer.disconnect();
+            const els = entry.target.querySelectorAll('.will-animate');
+            els.forEach((el, i) => {
+              setTimeout(() => {
+                (el as HTMLElement).classList.add('animate-in');
+              }, i * 150);
+            });
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -27,228 +26,94 @@ export default function Contact() {
   }, []);
 
   return (
-    <footer
-      id="kontakt"
-      ref={sectionRef}
-      aria-labelledby="contact-heading"
-      style={{ background: '#1A1A1A', color: '#FAFAFA' }}
-    >
-      {/* Main Contact Block */}
-      <div className="container-wide" style={{ paddingTop: '100px', paddingBottom: '80px' }}>
-        <div
-          ref={contentRef}
-          style={{ opacity: 0, transform: 'translateY(30px)' }}
-        >
-          {/* Section Header */}
-          <div className="mb-16">
-            <p
-              className="text-sm font-light tracking-[0.3em] uppercase mb-6"
-              style={{ color: '#C5A572' }}
-            >
-              Kontakt
-            </p>
-            <h2
-              id="contact-heading"
-              className="font-extralight"
-              style={{
-                fontSize: 'clamp(36px, 5vw, 68px)',
-                letterSpacing: '-0.03em',
-                lineHeight: '1.05',
-                color: '#FAFAFA',
-              }}
-            >
-              Lassen Sie uns
-              <br />
-              gemeinsam bauen.
-            </h2>
-          </div>
-
-          {/* Two Column Layout */}
+    <section id="kontakt" ref={sectionRef}>
+      {/* Main Contact Area */}
+      <div className="bg-[#1A1A1A] section-padding">
+        <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-            {/* Left: Contact Info */}
-            <div>
-              <div className="space-y-10">
-                {/* Address */}
+            {/* Left: Info */}
+            <div className="will-animate">
+              <p className="text-[#C5A572] text-sm tracking-[0.3em] uppercase mb-4">Kontakt</p>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-white tracking-tight mb-12 leading-tight">
+                Lassen Sie uns<br />gemeinsam bauen.
+              </h2>
+
+              <div className="space-y-8">
                 <div>
-                  <p
-                    className="text-xs font-light tracking-[0.25em] uppercase mb-3"
-                    style={{ color: '#C5A572' }}
-                  >
-                    Adresse
-                  </p>
-                  <address
-                    className="font-light not-italic"
-                    style={{ color: 'rgba(250,250,250,0.7)', lineHeight: '1.9', fontSize: '16px' }}
-                  >
-                    WORKS Architektur & Immobilien AG
-                    <br />
-                    Musterstrasse 42
-                    <br />
-                    8001 Zürich
-                    <br />
+                  <h3 className="text-[#C5A572] text-xs tracking-[0.2em] uppercase mb-2">Adresse</h3>
+                  <p className="text-white/80 font-light leading-relaxed">
+                    WORKS Architektur & Immobilien AG<br />
+                    Bellerivestrasse 18<br />
+                    CH-8008 Zürich<br />
                     Schweiz
-                  </address>
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <p
-                    className="text-xs font-light tracking-[0.25em] uppercase mb-3"
-                    style={{ color: '#C5A572' }}
-                  >
-                    Telefon
                   </p>
-                  <a
-                    href="tel:+41441234567"
-                    className="font-light transition-colors duration-300 focus:outline-none focus-visible:underline"
-                    style={{ color: 'rgba(250,250,250,0.7)', fontSize: '16px' }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = '#C5A572';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(250,250,250,0.7)';
-                    }}
-                  >
-                    +41 44 123 45 67
-                  </a>
                 </div>
 
-                {/* Email */}
                 <div>
-                  <p
-                    className="text-xs font-light tracking-[0.25em] uppercase mb-3"
-                    style={{ color: '#C5A572' }}
-                  >
-                    E-Mail
-                  </p>
-                  <a
-                    href="mailto:info@works-ag.ch"
-                    className="font-light transition-colors duration-300 focus:outline-none focus-visible:underline"
-                    style={{ color: 'rgba(250,250,250,0.7)', fontSize: '16px' }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = '#C5A572';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(250,250,250,0.7)';
-                    }}
-                  >
-                    info@works-ag.ch
+                  <h3 className="text-[#C5A572] text-xs tracking-[0.2em] uppercase mb-2">Telefon</h3>
+                  <a href="tel:+41432226242" className="text-white/80 font-light hover:text-[#C5A572] transition-colors">
+                    +41 43 222 62 42
                   </a>
                 </div>
-              </div>
 
-              {/* Social Links */}
-              <div className="flex gap-6 mt-12">
-                {['LinkedIn', 'Xing', 'Instagram'].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="text-xs font-light tracking-widest uppercase transition-colors duration-300 focus:outline-none focus-visible:underline"
-                    style={{ color: 'rgba(250,250,250,0.35)' }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = '#C5A572';
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(250,250,250,0.35)';
-                    }}
-                    aria-label={social}
-                  >
-                    {social}
+                <div>
+                  <h3 className="text-[#C5A572] text-xs tracking-[0.2em] uppercase mb-2">E-Mail</h3>
+                  <a href="mailto:info@works.ch" className="text-white/80 font-light hover:text-[#C5A572] transition-colors">
+                    info@works.ch
                   </a>
-                ))}
+                </div>
               </div>
             </div>
 
-            {/* Right: Map Placeholder + CTA */}
-            <div className="flex flex-col">
-              {/* Map Placeholder */}
-              <div
-                className="flex-1 min-h-64 mb-8 flex items-center justify-center"
-                style={{
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}
-                aria-label="Standortkarte Zürich"
-                role="img"
-              >
-                <div className="text-center">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    className="mx-auto mb-3"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M16 3C11.582 3 8 6.686 8 11.2c0 6.4 8 17.8 8 17.8s8-11.4 8-17.8C24 6.686 20.418 3 16 3z"
-                      stroke="#C5A572"
-                      strokeWidth="1"
-                    />
-                    <circle cx="16" cy="11" r="3" stroke="#C5A572" strokeWidth="1" />
-                  </svg>
-                  <p
-                    className="text-xs font-light tracking-widest uppercase"
-                    style={{ color: 'rgba(250,250,250,0.25)' }}
-                  >
-                    Zürich, Schweiz
-                  </p>
+            {/* Right: CTA + Map Placeholder */}
+            <div className="will-animate flex flex-col justify-between">
+              <div className="border border-white/10 p-8 md:p-12 mb-8">
+                <div className="w-12 h-12 border border-[#C5A572]/30 flex items-center justify-center mb-6">
+                  <span className="text-[#C5A572] text-xl font-light">W</span>
                 </div>
+                <p className="text-white/60 font-light leading-relaxed mb-8">
+                  Seit über 20 Jahren Ihr verlässlicher Partner für anspruchsvolle
+                  Bauprojekte in der Schweiz. Von der ersten Idee bis zur
+                  schlüsselfertigen Übergabe.
+                </p>
+                <a
+                  href="mailto:info@works.ch"
+                  className="inline-flex items-center px-8 py-3.5 bg-[#C5A572] text-white text-sm tracking-wider uppercase hover:bg-[#B8955F] transition-colors"
+                >
+                  Projekt anfragen
+                </a>
               </div>
 
-              {/* CTA Button */}
-              <a
-                href="mailto:info@works-ag.ch"
-                className="block text-center py-5 px-8 text-sm font-light tracking-[0.2em] uppercase transition-all duration-300 focus:outline-none focus-visible:ring-2"
-                style={{ background: '#C5A572', color: '#FAFAFA' }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = '#B8925F';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = '#C5A572';
-                }}
-              >
-                Projekt anfragen
-              </a>
+              {/* Map Placeholder with real location hint */}
+              <div className="border border-white/10 p-6 flex items-center gap-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C5A572" strokeWidth="1.5">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                  <circle cx="12" cy="9" r="2.5" />
+                </svg>
+                <div>
+                  <p className="text-white/60 text-sm font-light">Bellerivestrasse 18, Zürich</p>
+                  <p className="text-white/30 text-xs">Direkt am Zürichsee</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer Bar */}
-      <div
-        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-      >
-        <div
-          className="container-wide flex flex-col sm:flex-row items-center justify-between gap-4"
-          style={{ paddingTop: '28px', paddingBottom: '28px' }}
-        >
-          <p
-            className="text-xs font-light"
-            style={{ color: 'rgba(250,250,250,0.25)' }}
-          >
+      <div className="bg-[#111111] py-6">
+        <div className="container-wide flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-white/30 text-xs font-light">
             &copy; {new Date().getFullYear()} WORKS Architektur & Immobilien AG. Alle Rechte vorbehalten.
           </p>
-          <div className="flex gap-6">
-            {['Impressum', 'Datenschutz'].map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="text-xs font-light tracking-wide transition-colors duration-300 focus:outline-none focus-visible:underline"
-                style={{ color: 'rgba(250,250,250,0.25)' }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = '#C5A572';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(250,250,250,0.25)';
-                }}
-              >
-                {link}
-              </a>
-            ))}
+          <div className="flex items-center gap-6">
+            <a href="#" className="text-white/30 text-xs hover:text-[#C5A572] transition-colors">Impressum</a>
+            <a href="#" className="text-white/30 text-xs hover:text-[#C5A572] transition-colors">Datenschutz</a>
           </div>
         </div>
       </div>
-    </footer>
+    </section>
   );
 }
+
+export default Contact;
