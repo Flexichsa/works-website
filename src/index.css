@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a1628;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  color: #e0f0ff;
+}
+
+/* Custom Blueprint Cursor */
+body {
+  cursor: crosshair;
+}
+
+/* Loading Animation */
+@keyframes draw {
+  0% { stroke-dashoffset: 400; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -400; }
+}
+
+/* Scrollbar verstecken */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Selection Farbe */
+::selection {
+  background: #4a9eff33;
+  color: #00d4ff;
+}
