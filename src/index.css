@@ -1,39 +1,230 @@
 @import "tailwindcss";
 
-* {
+/* ===========================
+   GLOBAL STYLES
+   =========================== */
+
+:root {
+  --color-bg: #FAFAFA;
+  --color-text: #1A1A1A;
+  --color-accent: #C5A572;
+  --color-secondary: #6B6B6B;
+  --color-dark: #1A1A1A;
+  --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-html, body, #root {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #0a1628;
-  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-  color: #e0f0ff;
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Blueprint Cursor */
 body {
-  cursor: crosshair;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+  line-height: 1.6;
 }
 
-/* Loading Animation */
-@keyframes draw {
-  0% { stroke-dashoffset: 400; }
-  50% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -400; }
-}
-
-/* Scrollbar verstecken */
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
-  display: none;
+  width: 6px;
 }
 
-/* Selection Farbe */
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 3px;
+}
+
+/* Selection */
 ::selection {
-  background: #4a9eff33;
-  color: #00d4ff;
+  background: var(--color-accent);
+  color: white;
+}
+
+/* ===========================
+   TYPOGRAPHY
+   =========================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* ===========================
+   UTILITY CLASSES
+   =========================== */
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-dark {
+  background-color: var(--color-dark);
+  color: #FAFAFA;
+}
+
+.section-padding {
+  padding: 120px 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 80px 0;
+  }
+}
+
+.container-wide {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .container-wide {
+    padding: 0 24px;
+  }
+}
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+
+.will-animate {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Scroll indicator */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.scroll-indicator {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* ===========================
+   THREE.JS CANVAS
+   =========================== */
+
+.three-canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ===========================
+   NAVBAR
+   =========================== */
+
+.navbar-transparent {
+  background: transparent;
+}
+
+.navbar-solid {
+  background: rgba(250, 250, 250, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+}
+
+/* ===========================
+   PROJECT CARD HOVER
+   =========================== */
+
+.project-card .project-overlay {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-card .project-image {
+  transition: transform 0.6s ease;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.04);
+}
+
+/* ===========================
+   SERVICE CARD HOVER
+   =========================== */
+
+.service-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+
+.service-card .service-accent-line {
+  width: 0;
+  transition: width 0.4s ease;
+}
+
+.service-card:hover .service-accent-line {
+  width: 100%;
+}
+
+/* ===========================
+   COUNTER NUMBERS
+   =========================== */
+
+.stat-number {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 200;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #FAFAFA;
+}
+
+/* ===========================
+   TEAM CARD
+   =========================== */
+
+.team-card .team-image {
+  transition: transform 0.4s ease;
+}
+
+.team-card:hover .team-image {
+  transform: scale(1.03);
+}
+
+/* ===========================
+   RESPONSIVE VIDEO / CANVAS
+   =========================== */
+
+@media (max-width: 768px) {
+  .stat-number {
+    font-size: 48px;
+  }
 }

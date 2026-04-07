@@ -1,17 +1,27 @@
-import { Scene } from './components/canvas/Scene';
-import { Navigation } from './components/html/Navigation';
-import { LoadingScreen } from './components/html/LoadingScreen';
-import { FloorIndicator } from './components/html/FloorIndicator';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import Services from './components/Services';
+import Projects from './components/Projects';
+import Stats from './components/Stats';
+import Team from './components/Team';
+import Contact from './components/Contact';
 
-function App() {
+export default function App() {
   return (
-    <div className="w-full h-full">
-      <LoadingScreen />
-      <Scene />
-      <Navigation />
-      <FloorIndicator />
-    </div>
+    <>
+      <Navbar />
+
+      <main>
+        <Hero />
+        <About />
+        <Services />
+        <Projects />
+        <Stats />
+        <Team />
+      </main>
+
+      <Contact />
+    </>
   );
 }
-
-export default App;
